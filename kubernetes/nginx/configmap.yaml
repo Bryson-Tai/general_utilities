@@ -7,3 +7,4 @@ metadata:
     app: nginx
 data:
   name: John Doe
+  car: Kia
