@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Values.global.metadata.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        {{- range .Values.deployment.containers }}
+        - name: {{ $.Release.Name }}
+          image: {{ .image }}:{{ .tag }}
+          resources:
+            requests:
+              memory: {{ .resources.requests.memory }}
+              cpu: {{ .resources.requests.cpu }}
+            limits:
+              memory: {{ .resources.limits.memory }}
+              cpu: {{ .resources.limits.cpu }}
+          ports:
+            {{- range .ports }}
+              - containerPort: {{ .containerPort }}
+            {{- end }}
+        {{- end }}

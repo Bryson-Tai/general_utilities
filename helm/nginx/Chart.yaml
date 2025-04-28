@@ -1,0 +1,4 @@
+apiVersion: v2
+name: nginx
+description: Sample Nginx use for general testing and reference by any tools including but not limited to ArgoCD
+version: 1.0.0

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx
+  namespace: nginx
+  labels:
+    app: nginx
+data:
+  name: John Doe

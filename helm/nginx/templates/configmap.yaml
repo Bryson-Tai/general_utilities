@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Values.global.metadata.namespace }}
+  labels:
+    app: {{ .Release.Name }}
+data:
+    {{- range $keys, $values := .Values.configmap }}
+    {{ $keys }}: {{ $values }}
+    {{- end }}
