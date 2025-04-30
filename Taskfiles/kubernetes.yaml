@@ -1,12 +1,16 @@
 version: "3"
 
+# includes:
+#   gen_utils_k8s: https://github.com/Bryson-Tai/general_utilities.git//Taskfiles/kubernetes.yaml?ref=main
+
 tasks:
   helm:nginx:install:
     desc: Install Nginx Helm Chart
     dir: helm/nginx
     cmds:
       - |
-        helm install general-util-nginx . \
+        helm upgrade general-util-nginx . \
+        --install \
         --create-namespace \
         --namespace nginx
 
