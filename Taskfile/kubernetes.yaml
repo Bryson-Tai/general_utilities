@@ -1,0 +1,34 @@
+version: "3"
+
+helm:nginx:install:
+  desc: Install Nginx Helm Chart
+  dir: helm/nginx
+  cmds:
+    - |
+      helm install general-util-nginx . \
+      --create-namespace \
+      --namespace nginx
+
+helm:nginx:uninstall:
+  desc: Uninstall Nginx Helm Chart
+  dir: helm/nginx
+  cmds:
+    - |
+      helm uninstall general-util-nginx \
+      --namespace nginx
+
+kubernetes:nginx:apply:
+  desc: Apply Nginx Kubernetes Config
+  dir: kubernetes/nginx
+  cmds:
+    - |
+      kubectl apply --namespace nginx \
+      -f .
+
+kubernetes:nginx:delete:
+  desc: Delete Nginx Kubernetes Config
+  dir: kubernetes/nginx
+  cmds:
+    - |
+      kubectl delete --namespace nginx \
+      -f .
