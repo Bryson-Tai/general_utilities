@@ -9,7 +9,7 @@ version: "3"
 
 includes:
   # <git_repo_url>//<path_to_taskfile>?ref=<branch_name>
-  gen_utils_minikube: https://github.com/Bryson-Tai/general_utilities.git//Taskfile/minikube.yaml?ref=main
+  gen_utils_minikube: https://github.com/Bryson-Tai/general_utilities.git//Taskfiles/minikube.yaml?ref=main
 
 tasks:
   test:remote:
