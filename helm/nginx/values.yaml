@@ -17,8 +17,10 @@ deployment:
         - containerPort: 8080
 
 service:
-  - port: 8080
-    targerPort: 8080
+  type: NodePort
+  ports:
+    - port: 8080
+      targerPort: 8080
 
 configmap:
   name: John Doe

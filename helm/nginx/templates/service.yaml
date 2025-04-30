@@ -6,8 +6,9 @@ metadata:
 spec:
   selector:
     app: {{ .Release.Name }}
+  type: {{ .Values.service.type }}
   ports:
-    {{- range .Values.service }}
+    {{- range .Values.service.ports }}
     - port: {{ .port }}
       targetPort: {{ .targerPort }}
     {{- end }}
