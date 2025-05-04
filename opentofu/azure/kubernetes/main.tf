@@ -33,3 +33,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
     }
   )
 }
+
+resource "null_resource" "get_aks_credentials" {
+  for_each = var.aks_configs
+
+  provisioner "local-exec" {
+    command = "az aks get-credentials --resource-group ${azurerm_resource_group.aks-rg[each.key].name} --name ${azurerm_kubernetes_cluster.aks[each.key].name} --overwrite-existing --admin"
+  }
+}
