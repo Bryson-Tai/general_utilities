@@ -6,6 +6,7 @@ resource "azurerm_resource_group" "aks-rg" {
 
   tags = each.value.tags
 }
+
 resource "azurerm_kubernetes_cluster" "aks" {
   for_each = var.aks_configs
 
@@ -14,6 +15,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   name       = "${length(each.value.resource_prefix) > 0 ? "${each.value.resource_prefix}-" : ""}${each.key}"
   dns_prefix = replace(each.key, "-", "")
+  node_resource_group = "${azurerm_resource_group.aks-rg[each.key].name}-nodes"
 
   default_node_pool {
     name                         = each.value.default_node_pool.name
