@@ -13,8 +13,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
   location            = azurerm_resource_group.aks-rg[each.key].location
   resource_group_name = azurerm_resource_group.aks-rg[each.key].name
 
-  name       = "${length(each.value.resource_prefix) > 0 ? "${each.value.resource_prefix}-" : ""}${each.key}"
-  dns_prefix = replace(each.key, "-", "")
+  name                = "${length(each.value.resource_prefix) > 0 ? "${each.value.resource_prefix}-" : ""}${each.key}"
+  dns_prefix          = replace(each.key, "-", "")
   node_resource_group = "${azurerm_resource_group.aks-rg[each.key].name}-nodes"
 
   default_node_pool {
