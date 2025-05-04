@@ -1,0 +1,33 @@
+resource "azurerm_resource_group" "aks-rg" {
+  for_each = var.aks_config
+
+  name     = "${length(each.value.resource_prefix) > 0 ? "${each.value.resource_prefix}-" : ""}${each.key}-rg"
+  location = each.value.location
+
+  tags = each.value.tags
+}
+resource "azurerm_kubernetes_cluster" "aks" {
+  for_each = var.aks_config
+
+  location            = azurerm_resource_group.aks-rg[each.key].location
+  resource_group_name = azurerm_resource_group.aks-rg[each.key].name
+
+  name       = "${length(each.value.resource_prefix) > 0 ? "${each.value.resource_prefix}-" : ""}${each.key}"
+  dns_prefix = replace(each.key, "-", "")
+
+  default_node_pool {
+    name                         = each.value.default_node_pool.name
+    node_count                   = each.value.default_node_pool.node_count
+    vm_size                      = each.value.default_node_pool.vm_size
+    only_critical_addons_enabled = each.value.default_node_pool.only_critical_addons_enabled
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  tags = merge(each.value.tags, {
+    Environment = "Dev"
+    }
+  )
+}

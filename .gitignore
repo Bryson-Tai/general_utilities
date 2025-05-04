@@ -1,0 +1,10 @@
+.env
+.env.*
+
+!.env.example
+
+# Terraform / OpenTofu
+.terraform
+.terraform.tfstate
+.terraform.tfstate.backup
+.terraform.lock*
