@@ -6,6 +6,7 @@
 # Terraform / OpenTofu
 .terraform
 .terraform.lock*
+.terraform.tfstate.lock*
 terraform.tfstate
 terraform.tfstate.backup
 terraform.tfstate.backup.*
