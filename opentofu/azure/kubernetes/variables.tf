@@ -1,4 +1,4 @@
-variable "aks_config" {
+variable "aks_configs" {
   description = "The configuration for the AKS cluster"
   type = map(object({
     resource_prefix = string

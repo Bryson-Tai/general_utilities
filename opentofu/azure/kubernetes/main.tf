@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "aks-rg" {
-  for_each = var.aks_config
+  for_each = var.aks_configs
 
   name     = "${length(each.value.resource_prefix) > 0 ? "${each.value.resource_prefix}-" : ""}${each.key}-rg"
   location = each.value.location
@@ -7,7 +7,7 @@ resource "azurerm_resource_group" "aks-rg" {
   tags = each.value.tags
 }
 resource "azurerm_kubernetes_cluster" "aks" {
-  for_each = var.aks_config
+  for_each = var.aks_configs
 
   location            = azurerm_resource_group.aks-rg[each.key].location
   resource_group_name = azurerm_resource_group.aks-rg[each.key].name
