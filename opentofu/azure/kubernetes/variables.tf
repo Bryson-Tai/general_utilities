@@ -2,7 +2,6 @@ variable "aks_configs" {
   description = "The configuration for the AKS cluster"
   type = map(object({
     resource_prefix = string
-    name            = string
     location        = string
     default_node_pool = object({
       name                         = string
@@ -16,7 +15,6 @@ variable "aks_configs" {
   default = {
     example = {
       resource_prefix = "example"
-      name            = "example-aks1"
       location        = "West Europe"
       default_node_pool = {
         name                         = "default"
