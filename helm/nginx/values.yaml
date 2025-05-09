@@ -1,7 +1,3 @@
-global:
-  metadata: 
-    namespace: nginx
-
 deployment:
   containers:
     - image: nginx

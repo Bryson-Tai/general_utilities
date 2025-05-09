@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}
-  namespace: {{ .Values.global.metadata.namespace }}
 spec:
   selector:
     matchLabels:
