@@ -1,0 +1,37 @@
+version: '3'
+
+tasks:
+## OpenTofu Tasks
+  tf:init:
+    desc: OpenTofu init
+    dotenv:
+      - .env
+    cmds:
+      - tofu init -upgrade
+
+  tf:plan:
+    desc: OpenTofu plan
+    deps:
+      - tf:init
+    dotenv:
+      - .env
+    cmds:
+      - tofu plan
+  
+  tf:apply:
+    desc: OpenTofu provision
+    deps:
+      - tf:init
+    dotenv:
+      - .env
+    cmds:
+      - tofu apply -auto-approve
+  
+  tf:destroy:
+    desc: OpenTofu destroy
+    deps:
+      - tf:init
+    dotenv:
+      - .env
+    cmds:
+      - tofu destroy -auto-approve
