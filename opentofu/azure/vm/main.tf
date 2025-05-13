@@ -5,7 +5,7 @@ resource "azurerm_public_ip" "public_ip" {
   resource_group_name = var.rg_name
   location            = var.rg_location
 
-  name = "${var.group_name_prefix}-${each.value.vmName}-public-ip"
+  name              = "${var.group_name_prefix}-${each.value.vmName}-public-ip"
   domain_name_label = replace("${var.group_name_prefix}-${each.value.vmName}", "_", "-")
 
   allocation_method = "Static"
