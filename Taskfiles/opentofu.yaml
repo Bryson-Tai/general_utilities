@@ -4,6 +4,7 @@ tasks:
 ## OpenTofu Tasks
   tf:init:
     desc: OpenTofu init
+    dir: opentofu/modules
     dotenv:
       - .env
     cmds:
@@ -11,6 +12,7 @@ tasks:
 
   tf:plan:
     desc: OpenTofu plan
+    dir: opentofu/modules
     deps:
       - tf:init
     dotenv:
@@ -20,6 +22,7 @@ tasks:
   
   tf:apply:
     desc: OpenTofu provision
+    dir: opentofu/modules
     deps:
       - tf:init
     dotenv:
@@ -29,6 +32,7 @@ tasks:
   
   tf:destroy:
     desc: OpenTofu destroy
+    dir: opentofu/modules
     deps:
       - tf:init
     dotenv:
