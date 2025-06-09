@@ -13,7 +13,7 @@ resource "azurerm_container_registry" "acr" {
   location            = azurerm_resource_group.acr-rg[each.key].location
   resource_group_name = azurerm_resource_group.acr-rg[each.key].name
 
-  name          = "${each.key}-acr"
+  name          = "${each.key}acr"
   sku           = "Basic"
   admin_enabled = false
 
