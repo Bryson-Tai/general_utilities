@@ -20,3 +20,13 @@ tasks:
     cmds:
       - echo "Hello"
 ```
+
+## OpenTofu
+
+Refer to example below to use the modules in OpenTofu:
+
+```hcl
+  module "aks" {
+    source = "git::https://github.com/Bryson-Tai/general_utilities.git//opentofu/azure/<module_dir_name>?ref=main"
+  }
+```
