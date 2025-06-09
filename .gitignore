@@ -2,6 +2,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python,terraform,go,dotenv
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,terraform,go,dotenv
 
+### Go-Task ###
+.task/*
+
 ### dotenv ###
 .env
 .env.*
