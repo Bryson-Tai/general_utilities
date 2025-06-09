@@ -1,5 +1,14 @@
 variable "acr_configs" {
-  description = "The configuration for the AKS cluster"
+  description = <<EOF
+    The configuration for the Azure Container Registry (ACR)
+    
+    resource_prefix : Prefix for the resource name, optional.
+    location        : The Azure region where the ACR will be created.
+    sku             : The SKU for the ACR, default is "Basic".
+    admin_enabled   : Whether to enable the admin user, default is false.
+    tags            : A map of tags to apply to the ACR.
+  EOF
+  
   type = map(object({
     resource_prefix = optional(string)
     location        = string

@@ -1,7 +1,7 @@
 variable "group_name_prefix" {
   description = "Provide a prefer group name"
   type        = string
-  default     = "project_c"
+  default     = "simple-vm"
 }
 
 variable "rg_name" {
@@ -22,6 +22,14 @@ variable "vritual_network_name" {
 }
 
 variable "vm_config" {
+  description = <<EOF
+    The configuration for the Azure Virtual Machines (VMs).
+    
+    (vm_names) : A map of VM names to their configurations, including:
+      - subnetName         : The name of the subnet where the VM will be deployed.
+      - app_sec_group_list : A list of application security group names to associate with the VM.
+  EOF
+
   type = map(object({
     subnetName         = string
     app_sec_group_list = optional(list(string), [""])
@@ -38,6 +46,27 @@ variable "vm_config" {
 }
 
 variable "subnet_config" {
+  description = <<EOF
+    The configuration for the Azure Subnets.
+    
+    (subnet_ip_ranges) : A list of IP ranges for the subnet.
+    (security_rule_config) : A map of security rule configurations, where each key is a rule name and the value is an object containing:
+      - priority                                    : The priority of the security rule.
+      - inbound_or_outbound                         : Whether the rule is inbound or outbound. Default is true.
+      - allow_access                                : Whether to allow access. Default is true.
+      - protocol                                    : The protocol for the rule. Optional, default is null.
+      - source_port_range                           : The source port range. Optional, default is null.
+      - destination_port_range                      : The destination port range. Optional, default is null.
+      - source_address_prefix                       : The source address prefix. Optional, default is null.
+      - destination_address_prefix                  : The destination address prefix. Optional, default is null.
+      - source_port_ranges                          : A list of source port ranges. Default is an empty list.
+      - destination_port_ranges                     : A list of destination port ranges. Default is an empty list.
+      - source_address_prefixes                     : A list of source address prefixes. Default is an empty list.
+      - destination_address_prefixes                : A list of destination address prefixes. Default is an empty list.
+      - source_application_security_group_list      : A list of source application security groups. Default is an empty list.
+      - destination_application_security_group_list : A list of destination application security groups. Default is an empty list.
+  EOF
+
   type = map(object({
     subnet_ip_ranges = list(string)
 
