@@ -27,13 +27,11 @@ tasks:
     dir: kubernetes/nginx
     cmds:
       - |
-        kubectl apply --namespace nginx \
-        -f .
+        kubectl apply --namespace nginx -f .
 
   kubernetes:nginx:delete:
     desc: Delete Nginx Kubernetes Config
     dir: kubernetes/nginx
     cmds:
       - |
-        kubectl delete --namespace nginx \
-        -f .
+        kubectl delete --namespace nginx -f .

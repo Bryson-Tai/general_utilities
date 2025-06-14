@@ -17,8 +17,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
   dns_prefix          = replace(each.key, "-", "")
   node_resource_group = "${azurerm_resource_group.aks-rg[each.key].name}-nodes"
 
+  kubernetes_version = each.value.kubernetes_version
+
   default_node_pool {
     name                         = each.value.default_node_pool.name
+    orchestrator_version         = each.value.kubernetes_version
     node_count                   = each.value.default_node_pool.node_count
     vm_size                      = each.value.default_node_pool.vm_size
     only_critical_addons_enabled = each.value.default_node_pool.only_critical_addons_enabled

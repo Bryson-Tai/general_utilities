@@ -11,13 +11,11 @@ deployment:
           cpu: "500m"
       ports:
         - containerPort: 8080
-
 service:
   type: NodePort
   ports:
     - port: 8080
       targerPort: 8080
-
 configmap:
   name: John Doe
   car: Kia
