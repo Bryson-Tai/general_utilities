@@ -8,3 +8,7 @@ repos:
         name: Mixed Line Ending
       - id: trailing-whitespace
         name: Trailing Whitespace
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.27.2
+    hooks:
+      - id: gitleaks
