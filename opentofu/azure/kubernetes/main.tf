@@ -19,8 +19,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   kubernetes_version = each.value.kubernetes_version
 
-  # http_application_routing_enabled = true
-
   default_node_pool {
     name                         = each.value.default_node_pool.name
     orchestrator_version         = each.value.kubernetes_version
