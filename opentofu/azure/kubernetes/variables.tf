@@ -43,3 +43,9 @@ variable "aks_configs" {
     }
   }
 }
+
+variable "get_kubeconfig_to_local" {
+  description = "Whether to merge kubeconfig to your local kubeconfig"
+  type        = bool
+  default     = false
+}
