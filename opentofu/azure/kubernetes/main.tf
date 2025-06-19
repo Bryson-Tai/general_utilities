@@ -43,16 +43,17 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 }
 
-resource "null_resource" "get_aks_credentials" {
-  for_each = var.aks_configs
+#? Disable for pipeline
+# resource "null_resource" "get_aks_credentials" {
+#   for_each = var.aks_configs
 
-  provisioner "local-exec" {
-    command = <<EOF
-        az aks get-credentials \
-        --overwrite-existing --admin \
-        --resource-group ${azurerm_resource_group.aks-rg[each.key].name} \
-        --name ${azurerm_kubernetes_cluster.aks[each.key].name} \
-        --context ${azurerm_resource_group.aks-rg[each.key].name}
-    EOF
-  }
-}
+#   provisioner "local-exec" {
+#     command = <<EOF
+#         az aks get-credentials \
+#         --overwrite-existing --admin \
+#         --resource-group ${azurerm_resource_group.aks-rg[each.key].name} \
+#         --name ${azurerm_kubernetes_cluster.aks[each.key].name} \
+#         --context ${azurerm_resource_group.aks-rg[each.key].name}
+#     EOF
+#   }
+# }
