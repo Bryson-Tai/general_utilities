@@ -1,7 +1,7 @@
 resource "azurerm_resource_group" "aks-rg" {
   for_each = var.aks_configs
 
-  name     = "${length(each.value.resource_prefix) > 0 ? "${each.value.resource_prefix}-" : ""}${each.key}-rg"
+  name     = "${each.key}-aks-rg"
   location = each.value.location
 
   tags = each.value.tags
@@ -13,7 +13,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   location            = azurerm_resource_group.aks-rg[each.key].location
   resource_group_name = azurerm_resource_group.aks-rg[each.key].name
 
-  name                = "${length(each.value.resource_prefix) > 0 ? "${each.value.resource_prefix}-" : ""}${each.key}"
+  name                = "${each.key}-aks"
   dns_prefix          = replace(each.key, "-", "")
   node_resource_group = "${azurerm_resource_group.aks-rg[each.key].name}-nodes"
 
