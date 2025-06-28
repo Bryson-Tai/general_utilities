@@ -2,7 +2,6 @@ variable "aks_configs" {
   description = <<EOF
     The configuration for the Azure Kubernetes Service (AKS) cluster.
 
-    resource_prefix : Prefix for the resource name, optional.
     location        : The Azure region where the AKS cluster will be created.
     kubernetes_version : The version of Kubernetes to use, default is "1.32.1".
     default_node_pool : Configuration for the default node pool, including:
@@ -14,7 +13,6 @@ variable "aks_configs" {
   EOF
 
   type = map(object({
-    resource_prefix    = string
     location           = string
     kubernetes_version = optional(string, "1.32.1")
     default_node_pool = object({
@@ -28,7 +26,6 @@ variable "aks_configs" {
 
   default = {
     example = {
-      resource_prefix    = "example"
       location           = "West Europe"
       kubernetes_version = "1.32.1"
       default_node_pool = {
