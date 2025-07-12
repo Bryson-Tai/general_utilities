@@ -2,19 +2,24 @@ variable "aks_configs" {
   description = <<EOF
     The configuration for the Azure Kubernetes Service (AKS) cluster.
 
-    location        : The Azure region where the AKS cluster will be created.
-    kubernetes_version : The version of Kubernetes to use, default is "1.32.1".
-    default_node_pool : Configuration for the default node pool, including:
+    location                  : The Azure region where the AKS cluster will be created.
+    kubernetes_version        : The version of Kubernetes to use, default is "1.32.1".
+    api_server_access_profile : Configuration for the API server access profile, including:
+      authorized_ip_ranges : A list of IP ranges that are allowed to access the Kubernetes API server.
+    default_node_pool         : Configuration for the default node pool, including:
       - name                          : Name of the node pool.
       - vm_size                       : Size of the virtual machines in the node pool.
       - node_count                    : Number of nodes in the node pool, default is 1.
       - only_critical_addons_enabled  : Whether to enable only critical addons, default is false.
-    tags            : A map of tags to apply to the AKS cluster.
+    tags                      : A map of tags to apply to the AKS cluster.
   EOF
 
   type = map(object({
     location           = string
     kubernetes_version = optional(string, "1.32.1")
+    api_server_access_profile = object({
+      authorized_ip_ranges = optional(list(string), ["0.0.0.0/0"])
+    })
     default_node_pool = object({
       name                         = string
       vm_size                      = string

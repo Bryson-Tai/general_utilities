@@ -19,6 +19,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   kubernetes_version = each.value.kubernetes_version
 
+  api_server_access_profile {
+    authorized_ip_ranges = each.value.api_server_access_profile.authorized_ip_ranges
+  }
+
   default_node_pool {
     name                         = each.value.default_node_pool.name
     orchestrator_version         = each.value.kubernetes_version
