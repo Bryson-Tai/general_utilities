@@ -9,17 +9,17 @@ variable "acr_configs" {
   EOF
 
   type = map(object({
-    location        = string
-    sku             = optional(string, "Basic")
-    admin_enabled   = optional(bool, false)
-    tags            = map(string)
+    location      = string
+    sku           = optional(string, "Basic")
+    admin_enabled = optional(bool, false)
+    tags          = map(string)
   }))
 
   default = {
     example = {
-      location        = "West Europe"
-      sku             = "Basic"
-      admin_enabled   = false
+      location      = "West Europe"
+      sku           = "Basic"
+      admin_enabled = false
       tags = {
         Environment = "Dev"
       }

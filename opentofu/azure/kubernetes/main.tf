@@ -19,8 +19,19 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   kubernetes_version = each.value.kubernetes_version
 
+  role_based_access_control_enabled = each.value.role_based_access_control_enabled
+
+  azure_active_directory_role_based_access_control {
+    azure_rbac_enabled = each.value.role_based_access_control_enabled
+  }
+
   api_server_access_profile {
     authorized_ip_ranges = each.value.api_server_access_profile.authorized_ip_ranges
+  }
+
+  network_profile {
+    network_plugin = each.value.network_policy == "azure" ? "azure" : each.value.network_plugin
+    network_policy = each.value.network_policy == "azure" ? "azure" : each.value.network_policy
   }
 
   default_node_pool {
