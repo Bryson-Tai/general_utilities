@@ -26,7 +26,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   api_server_access_profile {
-    authorized_ip_ranges = each.value.api_server_access_profile.authorized_ip_ranges
+    authorized_ip_ranges = each.value.authorized_api_server_access_ip_ranges
   }
 
   network_profile {
