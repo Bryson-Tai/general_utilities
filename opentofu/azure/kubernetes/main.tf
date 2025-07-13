@@ -21,8 +21,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   kubernetes_version = each.value.kubernetes_version
 
-  role_based_access_control_enabled = each.value.role_based_access_control_enabled
-
   azure_active_directory_role_based_access_control {
     azure_rbac_enabled = each.value.aad_role_based_access_control_enabled
     tenant_id          = each.value.aad_role_based_access_control_enabled ? data.azuread_client_config.current.tenant_id : ""
