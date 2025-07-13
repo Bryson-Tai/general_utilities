@@ -6,8 +6,8 @@ variable "aks_configs" {
     kubernetes_version                     : The version of Kubernetes to use, default is "1.33.0".
     aad_role_based_access_control_enabled  : Whether to enable role-based access control, set this to true will also set `azure_active_directory_role_based_access_control.azure_rbac_enabled` to true, default is true.
     authorized_api_server_access_ip_ranges : A list of IP ranges that are allowed to access the Kubernetes API server.
-    network_policy                         : The network policy to use, can be "azure", "cilium" or "calico", default is "null".
-    network_plugin                         : The network plugin to use, can be "azure", "kubenet" or "none", default is "none".
+    network_policy                         : The network policy to use, can be "azure", "cilium" or "calico", default is "azure".
+    network_plugin                         : The network plugin to use, can be "azure", "kubenet" or "none", default is "azure".
     default_node_pool                      : Configuration for the default node pool, including:
       - name                          : Name of the node pool.
       - vm_size                       : Size of the virtual machines in the node pool.
@@ -22,8 +22,8 @@ variable "aks_configs" {
     kubernetes_version                     = optional(string, "1.33.0")
     aad_role_based_access_control_enabled  = optional(bool, false)
     authorized_api_server_access_ip_ranges = optional(list(string), ["0.0.0.0/0"])
-    network_plugin                         = optional(string, "none")
-    network_policy                         = optional(string, null)
+    network_plugin                         = optional(string, "azure")
+    network_policy                         = optional(string, "azure")
     default_node_pool = object({
       name                         = string
       vm_size                      = string
