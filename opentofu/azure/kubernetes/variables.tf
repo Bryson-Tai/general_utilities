@@ -3,7 +3,7 @@ variable "aks_configs" {
     The configuration for the Azure Kubernetes Service (AKS) cluster.
 
     location                               : The Azure region where the AKS cluster will be created.
-    kubernetes_version                     : The version of Kubernetes to use, default is "1.33.2".
+    kubernetes_version                     : The version of Kubernetes to use, default is "1.33.0".
     aad_role_based_access_control_enabled  : Whether to enable role-based access control, set this to true will also set `azure_active_directory_role_based_access_control.azure_rbac_enabled` to true, default is true.
     authorized_api_server_access_ip_ranges : A list of IP ranges that are allowed to access the Kubernetes API server.
     network_policy                         : The network policy to use, can be "azure", "cilium" or "calico", default is "null".
@@ -19,7 +19,7 @@ variable "aks_configs" {
 
   type = map(object({
     location                               = string
-    kubernetes_version                     = optional(string, "1.33.2")
+    kubernetes_version                     = optional(string, "1.33.0")
     aad_role_based_access_control_enabled  = optional(bool, false)
     authorized_api_server_access_ip_ranges = optional(list(string), ["0.0.0.0/0"])
     network_plugin                         = optional(string, "none")
@@ -37,7 +37,7 @@ variable "aks_configs" {
   default = {
     example = {
       location           = "West Europe"
-      kubernetes_version = "1.33.2"
+      kubernetes_version = "1.33.0"
       aad_role_based_access_control_enabled = true
       authorized_api_server_access_ip_ranges = ["0.0.0/0"]
       network_plugin     = "azure"
