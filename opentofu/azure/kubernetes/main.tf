@@ -1,5 +1,13 @@
 data "azuread_client_config" "current" {}
 
+resource "azurerm_role_assignment" "example" {
+  for_each = var.aks_configs
+
+  scope                = data.azuread_client_config.current.client_id
+  role_definition_name = "Azure Kubernetes Service RBAC Cluster Admin"
+  principal_id         = azurerm_resource_group.aks-rg[each.key].id
+}
+
 resource "azurerm_resource_group" "aks-rg" {
   for_each = var.aks_configs
 
