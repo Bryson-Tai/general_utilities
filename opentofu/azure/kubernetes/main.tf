@@ -1,3 +1,5 @@
+data "azuread_client_config" "current" {}
+
 resource "azurerm_resource_group" "aks-rg" {
   for_each = var.aks_configs
 
@@ -23,7 +25,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   azure_active_directory_role_based_access_control {
     azure_rbac_enabled = each.value.role_based_access_control_enabled
-    tenant_id          = each.value.azure_active_directory_role_based_access_control.tenant_id
+    tenant_id          = each.value.role_based_access_control_enabled ? data.azuread_client_config.current.tenant_id : ""
   }
 
   api_server_access_profile {
