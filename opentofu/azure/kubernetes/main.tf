@@ -49,6 +49,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     node_count                   = each.value.default_node_pool.node_count
     vm_size                      = each.value.default_node_pool.vm_size
     only_critical_addons_enabled = each.value.default_node_pool.only_critical_addons_enabled
+    os_disk_size_gb              = "32GiB"
   }
 
   identity {

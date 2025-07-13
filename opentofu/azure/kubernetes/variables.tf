@@ -19,7 +19,7 @@ variable "aks_configs" {
   type = map(object({
     location                               = string
     kubernetes_version                     = optional(string, "1.32.1")
-    aad_role_based_access_control_enabled      = optional(bool, false)
+    aad_role_based_access_control_enabled  = optional(bool, false)
     authorized_api_server_access_ip_ranges = optional(list(string), ["0.0.0.0/0"])
     network_plugin                         = optional(string, "none")
     network_policy                         = optional(string, null)
