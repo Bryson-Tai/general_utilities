@@ -1,6 +1,6 @@
 data "azuread_client_config" "current" {}
 
-resource "azurerm_role_assignment" "example" {
+resource "azurerm_role_assignment" "aks_rbac_cluster_admin" {
   for_each = var.aks_configs
 
   scope                = azurerm_resource_group.aks-rg[each.key].id
