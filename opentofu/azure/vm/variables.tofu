@@ -24,7 +24,7 @@ variable "vritual_network_name" {
 variable "vm_config" {
   description = <<EOF
     The configuration for the Azure Virtual Machines (VMs).
-    
+
     (vm_names) : A map of VM names to their configurations, including:
       - subnetName         : The name of the subnet where the VM will be deployed.
       - app_sec_group_list : A list of application security group names to associate with the VM.
@@ -48,7 +48,7 @@ variable "vm_config" {
 variable "subnet_config" {
   description = <<EOF
     The configuration for the Azure Subnets.
-    
+
     (subnet_ip_ranges) : A list of IP ranges for the subnet.
     (security_rule_config) : A map of security rule configurations, where each key is a rule name and the value is an object containing:
       - priority                                    : The priority of the security rule.
