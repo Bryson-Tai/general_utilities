@@ -5,13 +5,13 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_virtual_network" "network" {
-  name                = "${var.env}-network"
+  name                = "${var.env}-network${length(var.resource_postfix) > 0 ? "-${var.resource_postfix}" : ""}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   address_space       = var.network.address_space
 
   subnet {
-    name             = "${var.env}-subnet"
+    name             = "${var.env}-subnet${length(var.resource_postfix) > 0 ? "-${var.resource_postfix}" : ""}"
     address_prefixes = var.network.subnet.address_prefixes
   }
 
