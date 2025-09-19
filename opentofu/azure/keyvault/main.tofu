@@ -1,7 +1,7 @@
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_resource_group" "rg" {
-  name     = "${var.env}-akv-rg"
+  name     = "${var.env}-akv${length(var.resource_postfix) > 0 ? "-${var.resource_postfix}" : ""}-rg"
   location = var.location
   tags     = var.tags
 }

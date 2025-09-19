@@ -3,7 +3,7 @@ data "azuread_client_config" "current" {}
 resource "azurerm_resource_group" "aks-rg" {
   for_each = var.aks_configs
 
-  name     = "${var.env}-${each.key}-aks-rg"
+  name     = "${var.env}-${each.key}-aks${length(var.resource_postfix) > 0 ? "-${var.resource_postfix}" : ""}-rg"
   location = var.location
 
   tags = var.tags

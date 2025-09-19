@@ -1,7 +1,7 @@
 resource "azurerm_resource_group" "acr-rg" {
   for_each = var.acr_configs
 
-  name     = "${var.env}-${each.key}-acr-rg"
+  name     = "${var.env}-${each.key}-acr${length(var.resource_postfix) > 0 ? "-${var.resource_postfix}" : ""}-rg"
   location = var.location
 
   tags = var.tags

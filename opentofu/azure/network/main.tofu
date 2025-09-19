@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "rg" {
-  name     = "${var.env}-network-rg"
+  name     = "${var.env}-network${length(var.resource_postfix) > 0 ? "-${var.resource_postfix}" : ""}-rg"
   location = var.location
   tags     = var.tags
 }
