@@ -3,10 +3,10 @@ data "azuread_client_config" "current" {}
 resource "azurerm_resource_group" "aks-rg" {
   for_each = var.aks_configs
 
-  name     = "${each.key}-aks-rg"
-  location = each.value.location
+  name     = "${var.env}-${each.key}-aks-rg"
+  location = var.location
 
-  tags = each.value.tags
+  tags = var.tags
 }
 
 resource "azurerm_kubernetes_cluster" "aks" {
@@ -15,7 +15,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   location            = azurerm_resource_group.aks-rg[each.key].location
   resource_group_name = azurerm_resource_group.aks-rg[each.key].name
 
-  name                = "${each.key}-aks"
+  name                = "${var.env}-${each.key}-aks${length(var.resource_postfix) > 0 ? "-${var.resource_postfix}" : ""}"
   dns_prefix          = replace(each.key, "-", "")
   node_resource_group = "${azurerm_resource_group.aks-rg[each.key].name}-nodes"
 

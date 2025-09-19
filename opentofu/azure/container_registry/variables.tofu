@@ -1,3 +1,24 @@
+variable "env" {
+  type = string
+}
+
+variable "tags" {
+  description = "The tags for assign to each of the available resources"
+  type        = map(string)
+  default     = {}
+}
+
+variable "location" {
+  description = "The location (region) of deployment"
+  type        = string
+}
+
+variable "resource_postfix" {
+  description = "Add name postfix into Azure resource name"
+  type = string
+  default = ""
+}
+
 variable "acr_configs" {
   description = <<EOF
     The configuration for the Azure Container Registry (ACR)
@@ -9,20 +30,14 @@ variable "acr_configs" {
   EOF
 
   type = map(object({
-    location      = string
     sku           = optional(string, "Basic")
     admin_enabled = optional(bool, false)
-    tags          = map(string)
   }))
 
   default = {
     example = {
-      location      = "West Europe"
       sku           = "Basic"
       admin_enabled = false
-      tags = {
-        Environment = "Dev"
-      }
     }
   }
 }

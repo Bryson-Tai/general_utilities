@@ -11,7 +11,7 @@ resource "azurerm_key_vault" "akv" {
   location            = azurerm_resource_group.rg.location
   tenant_id           = data.azurerm_client_config.current.tenant_id
 
-  name     = "${var.env}-akv"
+  name     = "${var.env}-akv${length(var.resource_postfix) > 0 ? "-${var.resource_postfix}" : ""}"
   sku_name = var.akv.sku_name
 
   access_policy {

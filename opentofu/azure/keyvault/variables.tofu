@@ -13,6 +13,12 @@ variable "location" {
   type        = string
 }
 
+variable "resource_postfix" {
+  description = "Add name postfix into Azure resource name"
+  type = string
+  default = ""
+}
+
 variable "akv" {
   description = <<EOF
     sku_name  : SKU Name
