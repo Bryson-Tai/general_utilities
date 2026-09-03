@@ -78,7 +78,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 }
 
-resource "null_resource" "configure_vm" {
+resource "terraform_data" "configure_vm" {
   for_each = var.enable_sql_setup ? local.structured_vm_config : {}
 
   provisioner "remote-exec" {

@@ -6,7 +6,7 @@ resource "tls_private_key" "vm_ssh_keys" {
 }
 
 # Save Private Key to local for SSH
-resource "null_resource" "save_private_key" {
+resource "terraform_data" "save_private_key" {
   for_each = local.structured_vm_config
 
   provisioner "local-exec" {
@@ -18,7 +18,7 @@ resource "null_resource" "save_private_key" {
     })
   }
 
-  triggers = {
-    ssh_key_change = tls_private_key.vm_ssh_keys[each.key].private_key_openssh
-  }
+  triggers_replace = [
+    tls_private_key.vm_ssh_keys[each.key].private_key_openssh
+  ]
 }

@@ -61,7 +61,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 }
 
 #? Disable for pipeline
-resource "null_resource" "get_aks_credentials" {
+resource "terraform_data" "get_aks_credentials" {
   for_each = var.get_kubeconfig_to_local ? var.aks_configs : {}
 
   provisioner "local-exec" {

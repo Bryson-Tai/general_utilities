@@ -3,7 +3,7 @@ variable "messages" {
   default = ""
 }
 
-resource "null_resource" "hello" {
+resource "terraform_data" "hello" {
   provisioner "local-exec" {
     command = "echo ${var.messages}"
   }

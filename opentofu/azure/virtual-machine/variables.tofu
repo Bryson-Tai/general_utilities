@@ -37,16 +37,17 @@ variable "vm_config" {
   EOF
 
   type = map(object({
-    size              = optional(string, "Standard_A2_v2")
-    admin_username    = optional(string, "adminuser")
-
+    size               = optional(string, "Standard_A2_v2")
+    admin_username     = optional(string, "adminuser")
     subnetName         = string
     app_sec_group_list = optional(list(string), [""])
   }))
 
   default = {
     "vm_names" = {
-      subnetName = ""
+      size           = "Standard_A2_v2"
+      admin_username = "adminuser"
+      subnetName     = ""
       app_sec_group_list = [
         "webserver"
       ]
