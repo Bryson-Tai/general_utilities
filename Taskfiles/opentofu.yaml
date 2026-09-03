@@ -1,7 +1,7 @@
 version: "3"
 
 tasks:
-## OpenTofu Tasks
+  ## OpenTofu Tasks
   tf:init:
     desc: OpenTofu init
     dir: opentofu/modules
@@ -19,7 +19,7 @@ tasks:
       - .env
     cmds:
       - tofu plan
-  
+
   tf:apply:
     desc: OpenTofu provision
     dir: opentofu/modules
@@ -29,7 +29,7 @@ tasks:
       - .env
     cmds:
       - tofu apply -auto-approve
-  
+
   tf:destroy:
     desc: OpenTofu destroy
     dir: opentofu/modules
