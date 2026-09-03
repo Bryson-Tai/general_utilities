@@ -16,11 +16,11 @@ resource "terraform_data" "save_private_key" {
 
     command = templatefile("${path.module}/bash/vm_private_key.sh", {
       project_postfix = each.key
-      private_key     = tls_private_key.vm_ssh_keys[each.key].private_key_openssh
     })
 
     environment = {
       CREATE_PRIVATE_KEY = "true"
+      private_key     = tls_private_key.vm_ssh_keys[each.key].private_key_openssh
     }
   }
 
