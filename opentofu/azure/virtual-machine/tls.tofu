@@ -14,7 +14,7 @@ resource "terraform_data" "save_private_key" {
     when        = create
     interpreter = ["/bin/bash", "-c", ]
 
-    command = templatefile("${path.module}/bash/download_private_key.sh", {
+    command = templatefile("${path.module}/bash/vm_private_key.sh", {
       project_postfix = each.key
       private_key     = tls_private_key.vm_ssh_keys[each.key].private_key_openssh
     })
@@ -29,7 +29,7 @@ resource "terraform_data" "save_private_key" {
     when        = destroy
     interpreter = ["/bin/bash", "-c", ]
 
-    command = templatefile("${path.module}/bash/cleanup_private_key.sh", {
+    command = templatefile("${path.module}/bash/vm_private_key.sh", {
       project_postfix = each.key
     })
 
