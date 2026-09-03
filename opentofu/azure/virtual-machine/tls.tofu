@@ -35,7 +35,7 @@ resource "terraform_data" "save_private_key" {
 
     environment = {
       DELETE_PRIVATE_KEY = "true"
-      private_key        = tls_private_key.vm_ssh_keys[each.key].private_key_openssh
+      private_key        = ""
     }
   }
 
