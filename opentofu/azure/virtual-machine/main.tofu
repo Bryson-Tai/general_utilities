@@ -3,7 +3,7 @@ resource "azurerm_public_ip" "public_ip" {
   for_each = local.structured_vm_config
 
   resource_group_name = var.rg_name
-  location            = var.rg_location
+  location            = var.location
 
   name              = "${var.group_name_prefix}-${each.value.vmName}-public-ip"
   domain_name_label = replace("${var.group_name_prefix}-${each.value.vmName}", "_", "-")
@@ -16,7 +16,7 @@ resource "azurerm_network_interface" "vm_nic" {
   for_each = local.structured_vm_config
 
   resource_group_name = var.rg_name
-  location            = var.rg_location
+  location            = var.location
 
   name = "${var.group_name_prefix}-${each.value.vmName}-vm-nic"
 
@@ -33,7 +33,7 @@ resource "azurerm_application_security_group" "asg" {
   for_each = local.structured_asg_config
 
   resource_group_name = var.rg_name
-  location            = var.rg_location
+  location            = var.location
 
   name = "${var.group_name_prefix}-${each.key}-asg"
 }
@@ -49,7 +49,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   for_each = local.structured_vm_config
 
   resource_group_name = var.rg_name
-  location            = var.rg_location
+  location            = var.location
 
   name           = replace("${var.group_name_prefix}-${each.value.vmName}-vm", "_", "-")
   size           = var.vm_config[each.value.vmName].size

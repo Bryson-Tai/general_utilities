@@ -8,7 +8,7 @@ resource "azurerm_network_security_group" "network_sec_group" {
   for_each = var.subnet_config
 
   resource_group_name = var.rg_name
-  location            = var.rg_location
+  location            = var.location
   name                = "${var.group_name_prefix}-${each.key}-sec-group"
 }
 

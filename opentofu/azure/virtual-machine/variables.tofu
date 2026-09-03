@@ -10,7 +10,7 @@ variable "rg_name" {
   default     = ""
 }
 
-variable "rg_location" {
+variable "location" {
   description = "Resource group location"
   type        = string
   default     = "eastasia"
