@@ -52,15 +52,15 @@ resource "azurerm_linux_virtual_machine" "vm" {
   location            = var.rg_location
 
   name           = replace("${var.group_name_prefix}-${each.value.vmName}-vm", "_", "-")
-  size           = "Standard_A2_v2"
-  admin_username = "adminuser"
+  size           = var.vm_config[each.value.vmName].size
+  admin_username = var.vm_config[each.value.vmName].admin_username
 
   network_interface_ids = [
     azurerm_network_interface.vm_nic[each.key].id,
   ]
 
   admin_ssh_key {
-    username   = "adminuser"
+    username   = var.vm_config[each.value.vmName].admin_username
     public_key = tls_private_key.vm_ssh_keys[each.key].public_key_openssh
   }
 
@@ -73,13 +73,13 @@ resource "azurerm_linux_virtual_machine" "vm" {
   source_image_reference {
     publisher = "Canonical"
     offer     = "0001-com-ubuntu-server-jammy"
-    sku       = "22_04-lts"
+    sku       = "24_04-lts"
     version   = "latest"
   }
 }
 
 resource "null_resource" "configure_vm" {
-  for_each = local.structured_vm_config
+  for_each = var.enable_sql_setup ? local.structured_vm_config : {}
 
   provisioner "remote-exec" {
     connection {

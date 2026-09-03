@@ -21,6 +21,12 @@ variable "virtual_network_name" {
   description = "Virtual Network Name"
 }
 
+variable "enable_sql_setup" {
+  description = "Enable SQL setup on the virtual machine"
+  type        = bool
+  default     = false
+}
+
 variable "vm_config" {
   description = <<EOF
     The configuration for the Azure Virtual Machines (VMs).
@@ -31,6 +37,9 @@ variable "vm_config" {
   EOF
 
   type = map(object({
+    size              = optional(string, "Standard_A2_v2")
+    admin_username    = optional(string, "adminuser")
+
     subnetName         = string
     app_sec_group_list = optional(list(string), [""])
   }))
