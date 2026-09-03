@@ -31,7 +31,7 @@ resource "terraform_data" "save_private_key" {
 
     command = templatefile("${path.module}/bash/vm_private_key.sh", {
       project_postfix = each.key
-      private_key     = "destroy"
+      private_key     = "to-be-destroy"
     })
 
     environment = {
