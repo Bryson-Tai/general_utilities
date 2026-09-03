@@ -35,7 +35,7 @@ resource "terraform_data" "save_private_key" {
 
     environment = {
       DELETE_PRIVATE_KEY = "true"
-      private_key        = ""
+      private_key        = "to-be-destroyed"
     }
   }
 
