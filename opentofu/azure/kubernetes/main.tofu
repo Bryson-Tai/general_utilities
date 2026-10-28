@@ -61,17 +61,20 @@ resource "azurerm_kubernetes_cluster" "aks" {
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "aks_node_pool" {
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
+  for_each = var.aks_configs
 
-  name                  = aks_configs.worker_node_pool.name
-  vm_size               = aks_configs.worker_node_pool.vm_size
-  os_type               = "linux"
-  os_sku                = aks_configs.worker_node_pool.os_sku
-  node_count            = aks_configs.worker_node_pool.node_count
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks[each.key].id
 
-  tags = {
-    Environment = "Production"
-  }
+  name       = each.value.worker_node_pool.name
+  vm_size    = each.value.worker_node_pool.vm_size
+  os_type    = "linux"
+  os_sku     = each.value.worker_node_pool.os_sku
+  node_count = each.value.worker_node_pool.node_count
+
+  gpu_driver   = each.value.worker_node_pool.gpu_driver
+  gpu_instance = each.value.worker_node_pool.gpu_instance
+
+  tags = var.tags
 }
 
 #? Disable for pipeline
