@@ -35,6 +35,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
     network_policy = each.value.network_policy == "azure" ? "azure" : each.value.network_policy
   }
 
+  node_provisioning_profile {
+    default_node_pools = "None"
+    mode               = "Manual"
+  }
+
   default_node_pool {
     name                         = each.value.default_node_pool.name
     orchestrator_version         = each.value.kubernetes_version
@@ -48,7 +53,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     type = "SystemAssigned"
   }
 
-  tags = merge(each.value.tags, {
+  tags = merge(var.tags, {
     Environment = "Dev"
     }
   )
@@ -58,6 +63,23 @@ resource "azurerm_kubernetes_cluster" "aks" {
       default_node_pool[0].upgrade_settings,
     ]
   }
+}
+
+resource "azurerm_kubernetes_cluster_node_pool" "aks_node_pool" {
+  for_each = var.aks_configs
+
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks[each.key].id
+
+  name       = each.value.worker_node_pool.name
+  vm_size    = each.value.worker_node_pool.vm_size
+  os_type    = "Linux"
+  os_sku     = each.value.worker_node_pool.os_sku
+  node_count = each.value.worker_node_pool.node_count
+
+  gpu_driver   = each.value.worker_node_pool.gpu_driver
+  gpu_instance = each.value.worker_node_pool.gpu_instance
+
+  tags = var.tags
 }
 
 #? Disable for pipeline

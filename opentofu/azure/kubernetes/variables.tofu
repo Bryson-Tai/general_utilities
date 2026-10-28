@@ -15,8 +15,8 @@ variable "location" {
 
 variable "resource_postfix" {
   description = "Add name postfix into Azure resource name"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "aks_configs" {
@@ -35,11 +35,10 @@ variable "aks_configs" {
       - node_count                    : Number of nodes in the node pool, default is 1.
       - only_critical_addons_enabled  : Whether to enable only critical addons, default is false.
       - os_disk_size_gb               : Size of the OS disk in GB, default is 32.
-    tags                                   : A map of tags to apply to the AKS cluster.
   EOF
 
   type = map(object({
-    kubernetes_version                     = optional(string, "1.33.0")
+    kubernetes_version                     = optional(string, "1.37.0")
     aad_role_based_access_control_enabled  = optional(bool, false)
     authorized_api_server_access_ip_ranges = optional(list(string), ["0.0.0.0/0"])
     network_plugin                         = optional(string, "azure")
@@ -51,21 +50,39 @@ variable "aks_configs" {
       only_critical_addons_enabled = optional(bool, false)
       os_disk_size_gb              = optional(number, 32)
     })
+    worker_node_pool = object({
+      name            = optional(string, "workers")
+      vm_size         = string
+      os_sku          = optional(string, "Ubuntu")
+      node_count      = optional(number, 1)
+      os_disk_size_gb = optional(number, 32)
+      gpu_driver      = string
+      gpu_instance    = string
+    })
   }))
 
   default = {
     example = {
-      kubernetes_version = "1.33.0"
-      aad_role_based_access_control_enabled = true
+      kubernetes_version                     = "1.37.0"
+      aad_role_based_access_control_enabled  = true
       authorized_api_server_access_ip_ranges = ["0.0.0/0"]
-      network_plugin     = "azure"
-      network_policy     = "azure"
+      network_plugin                         = "azure"
+      network_policy                         = "azure"
       default_node_pool = {
         name                         = "default"
         vm_size                      = "Standard_D2_v2"
         node_count                   = 1
         only_critical_addons_enabled = false
         os_disk_size_gb              = 32
+      }
+      worker_node_pool = {
+        name            = "workers"
+        vm_size         = "Standard_D2_v2"
+        os_sku          = "Ubuntu"
+        node_count      = 1
+        os_disk_size_gb = 32
+        gpu_driver      = "Install"
+        gpu_instance    = "MIG1g"
       }
     }
   }

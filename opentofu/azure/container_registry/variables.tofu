@@ -15,8 +15,8 @@ variable "location" {
 
 variable "resource_postfix" {
   description = "Add name postfix into Azure resource name"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "acr_configs" {
