@@ -51,6 +51,13 @@ variable "aks_configs" {
       only_critical_addons_enabled = optional(bool, false)
       os_disk_size_gb              = optional(number, 32)
     })
+    worker_node_pool = object({
+      name                         = optional(string, "workers")
+      vm_size                      = string
+      os_sku                       = string
+      node_count                   = optional(number, 1)
+      os_disk_size_gb              = optional(number, 32)
+    })
   }))
 
   default = {
@@ -66,6 +73,13 @@ variable "aks_configs" {
         node_count                   = 1
         only_critical_addons_enabled = false
         os_disk_size_gb              = 32
+      }
+      worker_node_pool = {
+        name            = "workers"
+        vm_size         = "Standard_D2_v2"
+        os_sku          = "Ubuntu"
+        node_count      = 1
+        os_disk_size_gb = 32
       }
     }
   }

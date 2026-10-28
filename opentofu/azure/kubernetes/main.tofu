@@ -60,6 +60,20 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 }
 
+resource "azurerm_kubernetes_cluster_node_pool" "aks_node_pool" {
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
+
+  name                  = aks_configs.worker_node_pool.name
+  vm_size               = aks_configs.worker_node_pool.vm_size
+  os_type               = "linux"
+  os_sku                = aks_configs.worker_node_pool.os_sku
+  node_count            = aks_configs.worker_node_pool.node_count
+
+  tags = {
+    Environment = "Production"
+  }
+}
+
 #? Disable for pipeline
 resource "terraform_data" "get_aks_credentials" {
   for_each = var.get_kubeconfig_to_local ? var.aks_configs : {}
