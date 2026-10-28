@@ -35,7 +35,6 @@ variable "aks_configs" {
       - node_count                    : Number of nodes in the node pool, default is 1.
       - only_critical_addons_enabled  : Whether to enable only critical addons, default is false.
       - os_disk_size_gb               : Size of the OS disk in GB, default is 32.
-    tags                                   : A map of tags to apply to the AKS cluster.
   EOF
 
   type = map(object({

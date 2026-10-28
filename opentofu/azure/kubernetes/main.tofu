@@ -53,7 +53,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     type = "SystemAssigned"
   }
 
-  tags = merge(each.value.tags, {
+  tags = merge(var.tags, {
     Environment = "Dev"
     }
   )
