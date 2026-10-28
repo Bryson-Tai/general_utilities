@@ -35,6 +35,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
     network_policy = each.value.network_policy == "azure" ? "azure" : each.value.network_policy
   }
 
+  node_provisioning_profile {
+    default_node_pools = "None"
+    mode               = "Manual"
+  }
+
   default_node_pool {
     name                         = each.value.default_node_pool.name
     orchestrator_version         = each.value.kubernetes_version
