@@ -81,15 +81,15 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_node_pool" {
 
 #? Disable for pipeline
 resource "terraform_data" "get_aks_credentials" {
-  for_each = var.get_kubeconfig_to_local ? var.aks_configs : {}
+  count = var.get_kubeconfig_to_local ? 1 : 0
 
   provisioner "local-exec" {
     command = <<EOF
         az aks get-credentials \
         --overwrite-existing --admin \
-        --resource-group ${azurerm_resource_group.aks-rg[each.key].name} \
-        --name ${azurerm_kubernetes_cluster.aks[each.key].name} \
-        --context ${azurerm_resource_group.aks-rg[each.key].name}
+        --resource-group ${azurerm_resource_group.aks-rg.name} \
+        --name ${azurerm_kubernetes_cluster.aks.name} \
+        --context ${azurerm_resource_group.aks-rg.name}
     EOF
   }
 }
