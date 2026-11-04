@@ -64,7 +64,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 resource "azurerm_kubernetes_cluster_node_pool" "aks_node_pool" {
   for_each = var.worker_node_pools
 
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks[each.key].id
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
 
   name        = each.key
   vm_size     = each.value.vm_size
