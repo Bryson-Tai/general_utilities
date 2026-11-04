@@ -92,14 +92,15 @@ variable "worker_node_pools" {
   }))
 
   default = {
-    name            = "workers"
-    vm_size         = "Standard_D2_v2"
-    os_sku          = "Ubuntu"
-    node_count      = 1
-    node_taints     = [""]
-    os_disk_size_gb = 32
-    gpu_driver      = "Install"
-    gpu_instance    = "MIG1g"
+    "workers" = {
+      vm_size         = "Standard_D2_v2"
+      os_sku          = "Ubuntu"
+      node_count      = 1
+      node_taints     = [""]
+      os_disk_size_gb = 32
+      gpu_driver      = "Install"
+      gpu_instance    = "MIG1g"
+    }
   }
 }
 
