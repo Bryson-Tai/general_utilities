@@ -55,6 +55,7 @@ variable "aks_configs" {
       vm_size         = string
       os_sku          = optional(string, "Ubuntu")
       node_count      = optional(number, 1)
+      node_taints     = optional(list(string), [""])
       os_disk_size_gb = optional(number, 32)
       gpu_driver      = string
       gpu_instance    = string
@@ -80,6 +81,7 @@ variable "aks_configs" {
         vm_size         = "Standard_D2_v2"
         os_sku          = "Ubuntu"
         node_count      = 1
+        node_taints     = [""]
         os_disk_size_gb = 32
         gpu_driver      = "Install"
         gpu_instance    = "MIG1g"

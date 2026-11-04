@@ -75,6 +75,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_node_pool" {
   os_type    = "Linux"
   os_sku     = each.value.worker_node_pool.os_sku
   node_count = each.value.worker_node_pool.node_count
+  node_taints = each.value.worker_node_pool.node_taints
 
   gpu_driver   = each.value.worker_node_pool.gpu_driver
   gpu_instance = each.value.worker_node_pool.gpu_instance
