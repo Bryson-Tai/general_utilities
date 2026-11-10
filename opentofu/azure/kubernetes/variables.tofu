@@ -87,8 +87,8 @@ variable "worker_node_pools" {
     node_count      = optional(number, 1)
     node_taints     = optional(list(string), [""])
     os_disk_size_gb = optional(number, 32)
-    gpu_driver      = string
-    gpu_instance    = string
+    gpu_driver      = optional(string, "Install")
+    gpu_instance    = optional(string, null)
   }))
 
   default = {
