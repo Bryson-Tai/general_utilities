@@ -110,10 +110,11 @@ resource "terraform_data" "get_aks_credentials" {
   provisioner "local-exec" {
     command = <<EOF
         az aks get-credentials \
-        --overwrite-existing --admin \
+        --overwrite-existing \
+        --admin \
         --resource-group ${azurerm_resource_group.aks-rg.name} \
         --name ${azurerm_kubernetes_cluster.aks.name} \
-        --context ${azurerm_resource_group.aks-rg.name}
+        --context ${azurerm_kubernetes_cluster.aks.name}
     EOF
   }
 }
@@ -123,7 +124,7 @@ resource "terraform_data" "install_gpu" {
 
   provisioner "local-exec" {
     command = templatefile("${path.module}/bash/helm-deploy-gpu-operator.sh", {
-      KUBE_CONTEXT = "dev-defox-aks-rg-admin"
+      KUBE_CONTEXT = azurerm_kubernetes_cluster.aks.name
       CURRENT_DIR  = "${path.module}"
     })
   }
