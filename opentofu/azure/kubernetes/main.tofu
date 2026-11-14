@@ -5,6 +5,12 @@ resource "azurerm_resource_group" "aks-rg" {
   location = var.location
 
   tags = var.tags
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
 }
 
 resource "azurerm_kubernetes_cluster" "aks" {
@@ -43,6 +49,12 @@ resource "azurerm_kubernetes_cluster" "aks" {
     vm_size                      = var.aks_configs.default_node_pool.vm_size
     only_critical_addons_enabled = var.aks_configs.default_node_pool.only_critical_addons_enabled
     os_disk_size_gb              = var.aks_configs.default_node_pool.os_disk_size_gb
+
+    upgrade_settings {
+      drain_timeout_in_minutes      = var.aks_configs.default_node_pool.upgrade_settings.drain_timeout_in_minutes
+      max_surge                     = var.aks_configs.default_node_pool.upgrade_settings.max_surge
+      node_soak_duration_in_minutes = var.aks_configs.default_node_pool.upgrade_settings.node_soak_duration_in_minutes
+    }
   }
 
   identity {
@@ -56,7 +68,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   lifecycle {
     ignore_changes = [
-      default_node_pool[0].upgrade_settings,
+      tags
     ]
   }
 }
@@ -76,7 +88,19 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_node_pool" {
   gpu_driver   = each.value.gpu_driver
   gpu_instance = each.value.gpu_instance
 
+  upgrade_settings {
+    drain_timeout_in_minutes      = each.value.upgrade_settings.drain_timeout_in_minutes
+    max_surge                     = each.value.upgrade_settings.max_surge
+    node_soak_duration_in_minutes = each.value.upgrade_settings.node_soak_duration_in_minutes
+  }
+
   tags = var.tags
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
 }
 
 #? Disable for pipeline
@@ -91,5 +115,16 @@ resource "terraform_data" "get_aks_credentials" {
         --name ${azurerm_kubernetes_cluster.aks.name} \
         --context ${azurerm_resource_group.aks-rg.name}
     EOF
+  }
+}
+
+resource "terraform_data" "install_gpu" {
+  for_each = { for k, v in var.worker_node_pools : k => v if v.gpu_driver == "Install" }
+
+  provisioner "local-exec" {
+    command = templatefile("${path.module}/bash/helm-deploy-gpu-operator.sh", {
+      KUBE_CONTEXT = "dev-defox-aks-rg-admin"
+      CURRENT_DIR  = "${path.module}"
+    })
   }
 }
