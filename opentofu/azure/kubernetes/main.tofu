@@ -7,7 +7,9 @@ resource "azurerm_resource_group" "aks-rg" {
   tags = var.tags
 
   lifecycle {
-    ignore_changes = [ tags ]
+    ignore_changes = [
+      tags
+    ]
   }
 }
 
@@ -60,7 +62,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   lifecycle {
     ignore_changes = [
-      default_node_pool[0].upgrade_settings,
       tags
     ]
   }
@@ -81,10 +82,18 @@ resource "azurerm_kubernetes_cluster_node_pool" "aks_node_pool" {
   gpu_driver   = each.value.gpu_driver
   gpu_instance = each.value.gpu_instance
 
+  upgrade_settings {
+    drain_timeout_in_minutes      = each.value.upgrade_settings.drain_timeout_in_minutes
+    max_surge                     = each.value.upgrade_settings.max_surge
+    node_soak_duration_in_minutes = each.value.upgrade_settings.node_soak_duration_in_minutes
+  }
+
   tags = var.tags
 
   lifecycle {
-    ignore_changes = [ tags ]
+    ignore_changes = [
+      tags
+    ]
   }
 }
 
