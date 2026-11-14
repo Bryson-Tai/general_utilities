@@ -17,5 +17,5 @@ helm install \
     --wait --generate-name \
     --create-namespace --upgrade \
     --namespace gpu-operator  \
-    --values "$CURRENT_DIR/gpu-operator-values.yaml" \
+    --values "${CURRENT_DIR}/gpu-operator-values.yaml" \
     nvidia/gpu-operator
