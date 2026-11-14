@@ -16,4 +16,5 @@ helm repo update
 helm install \
     --wait --generate-name --create-namespace \
     --namespace gpu-operator  \
+    --values ./gpu-operator-values.yaml \
     nvidia/gpu-operator
