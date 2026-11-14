@@ -17,4 +17,4 @@ helm upgrade nvidia-gpu-operator nvidia/gpu-operator \
     --wait --install \
     --create-namespace  \
     --namespace gpu-operator  \
-    --values "${CURRENT_DIR}/gpu-operator-values.yaml"
+    --values "gpu-operator-values.yaml"
