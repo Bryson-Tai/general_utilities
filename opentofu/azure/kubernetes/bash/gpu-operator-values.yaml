@@ -630,20 +630,29 @@ node-feature-discovery:
     serviceAccount:
       name: node-feature-discovery
       create: false
+    tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Equal"
+        value: ""
+        effect: "NoSchedule"
+      - key: "sku"
+        operator: "Equal"
+        value: "gpu"
+        effect: "NoSchedule"
   worker:
     serviceAccount:
       name: node-feature-discovery
       # disable creation to avoid duplicate serviceaccount creation by master spec below
       create: false
     tolerations:
-    - key: "node-role.kubernetes.io/control-plane"
-      operator: "Equal"
-      value: ""
-      effect: "NoSchedule"
-    - key: "sku"
-      operator: "Equal"
-      value: "gpu"
-      effect: "NoSchedule"
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Equal"
+        value: ""
+        effect: "NoSchedule"
+      - key: "sku"
+        operator: "Equal"
+        value: "gpu"
+        effect: "NoSchedule"
     config:
       sources:
         pci:
