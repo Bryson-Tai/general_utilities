@@ -13,9 +13,9 @@ fi
 helm repo add nvidia https://nvidia.github.io/gpu-operator
 helm repo update
 
-helm install \
+helm upgrade \
     --wait --generate-name \
-    --create-namespace --upgrade \
+    --create-namespace --install \
     --namespace gpu-operator  \
     --values "${CURRENT_DIR}/gpu-operator-values.yaml" \
     nvidia/gpu-operator
