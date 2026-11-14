@@ -98,7 +98,7 @@ resource "terraform_data" "install_gpu" {
   for_each = { for k, v in var.worker_node_pools : k => v if v.gpu_driver == "Install" }
 
   provisioner "local-exec" {
-    command = templatefile("./bash/helm-deploy-gpu-operator.sh", {
+    command = templatefile("${path.module}/bash/helm-deploy-gpu-operator.sh", {
       KUBE_CONTEXT = azurerm_kubernetes_cluster.aks.name
     })
   }
