@@ -43,10 +43,10 @@ daemonsets:
   annotations: {}
   priorityClassName: system-node-critical
   tolerations:
-  - key: sku
-    operator: In
+  - key: "sku"
+    operator: "Equal"
     value: "gpu"
-    effect: NoSchedule
+    effect: "NoSchedule"
   # configuration for controlling update strategy("OnDelete" or "RollingUpdate") of GPU Operands
   # note that driver Daemonset is always set with OnDelete to avoid unintended disruptions
   updateStrategy: "RollingUpdate"
@@ -95,10 +95,10 @@ operator:
     operator: "Equal"
     value: ""
     effect: "NoSchedule"
-  - key: sku
-    operator: In
+  - key: "sku"
+    operator: "Equal"
     value: "gpu"
-    effect: NoSchedule
+    effect: "NoSchedule"
   annotations:
     openshift.io/scc: restricted-readonly
   affinity:
@@ -108,7 +108,7 @@ operator:
           preference:
             matchExpressions:
               - key: "node-role.kubernetes.io/control-plane"
-                operator: In
+                operator: "In"
                 values: [""]
   logging:
     # Zap time encoding (one of 'epoch', 'millis', 'nano', 'iso8601', 'rfc3339' or 'rfc3339nano')
@@ -640,10 +640,10 @@ node-feature-discovery:
       operator: "Equal"
       value: ""
       effect: "NoSchedule"
-    - key: sku
-    operator: In
-    value: "gpu"
-    effect: NoSchedule
+    - key: "sku"
+      operator: "Equal"
+      value: "gpu"
+      effect: "NoSchedule"
     config:
       sources:
         pci:
