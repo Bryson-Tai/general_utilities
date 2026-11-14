@@ -95,6 +95,10 @@ operator:
     operator: "Equal"
     value: ""
     effect: "NoSchedule"
+  - key: sku
+    operator: In
+    value: "gpu"
+    effect: NoSchedule
   annotations:
     openshift.io/scc: restricted-readonly
   affinity:
@@ -636,9 +640,10 @@ node-feature-discovery:
       operator: "Equal"
       value: ""
       effect: "NoSchedule"
-    - key: nvidia.com/gpu
-      operator: Exists
-      effect: NoSchedule
+    - key: sku
+    operator: In
+    value: "gpu"
+    effect: NoSchedule
     config:
       sources:
         pci:
