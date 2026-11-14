@@ -89,7 +89,17 @@ resource "terraform_data" "get_aks_credentials" {
         --overwrite-existing --admin \
         --resource-group ${azurerm_resource_group.aks-rg.name} \
         --name ${azurerm_kubernetes_cluster.aks.name} \
-        --context ${azurerm_resource_group.aks-rg.name}
+        --context ${azurerm_kubernetes_cluster.aks.name}
     EOF
+  }
+}
+
+resource "terraform_data" "install_gpu" {
+  for_each = { for k, v in var.worker_node_pools : k => v if v.gpu_driver == "Install" }
+
+  provisioner "local-exec" {
+    command = templatefile("./bash/helm-deploy-gpu-operator.sh", {
+      KUBE_CONTEXT = azurerm_kubernetes_cluster.aks.name
+    })
   }
 }
