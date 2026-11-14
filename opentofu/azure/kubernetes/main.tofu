@@ -49,6 +49,12 @@ resource "azurerm_kubernetes_cluster" "aks" {
     vm_size                      = var.aks_configs.default_node_pool.vm_size
     only_critical_addons_enabled = var.aks_configs.default_node_pool.only_critical_addons_enabled
     os_disk_size_gb              = var.aks_configs.default_node_pool.os_disk_size_gb
+
+    upgrade_settings {
+      drain_timeout_in_minutes      = var.aks_configs.default_node_pool.upgrade_settings.drain_timeout_in_minutes
+      max_surge                     = var.aks_configs.default_node_pool.upgrade_settings.max_surge
+      node_soak_duration_in_minutes = var.aks_configs.default_node_pool.upgrade_settings.node_soak_duration_in_minutes
+    }
   }
 
   identity {

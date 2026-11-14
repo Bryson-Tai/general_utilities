@@ -50,6 +50,11 @@ variable "aks_configs" {
       node_count                   = optional(number, 1)
       only_critical_addons_enabled = optional(bool, false)
       os_disk_size_gb              = optional(number, 32)
+      upgrade_settings = object({
+        drain_timeout_in_minutes      = optional(number, 0)
+        max_surge                     = optional(string, "10%")
+        node_soak_duration_in_minutes = optional(number, 0)
+      })
     })
   })
 
@@ -66,6 +71,11 @@ variable "aks_configs" {
       node_count                   = 1
       only_critical_addons_enabled = false
       os_disk_size_gb              = 32
+      upgrade_settings = {
+        drain_timeout_in_minutes      = 0
+        max_surge                     = "10%"
+        node_soak_duration_in_minutes = 0
+      }
     }
   }
 }
