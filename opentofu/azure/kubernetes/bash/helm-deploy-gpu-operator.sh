@@ -19,7 +19,7 @@ helm upgrade nvidia-gpu-operator nvidia/gpu-operator \
     --wait --install \
     --create-namespace  \
     --namespace gpu-operator  \
-    --values "${CURRENT_DIR}/bash/gpu-operator-values.yaml"
+    --values "${CURRENT_DIR}/bash/gpu-operator-values.yaml" || true
 
 # Set toleration for the node-feature-discovery-master deployment to schedule on GPU nodes
 ## This is due to Helm Chart not setting the tolerations for the master deployment by default
