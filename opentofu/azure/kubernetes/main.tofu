@@ -123,7 +123,7 @@ resource "terraform_data" "install_gpu" {
 
   provisioner "local-exec" {
     command = templatefile("${path.module}/bash/helm-deploy-gpu-operator.sh", {
-      KUBE_CONTEXT = azurerm_resource_group.aks-rg.name
+      KUBE_CONTEXT = "dev-defox-aks-rg-admin"
     })
   }
 }
