@@ -124,6 +124,7 @@ resource "terraform_data" "install_gpu" {
   provisioner "local-exec" {
     command = templatefile("${path.module}/bash/helm-deploy-gpu-operator.sh", {
       KUBE_CONTEXT = "dev-defox-aks-rg-admin"
+      CURRENT_DIR  = path.module
     })
   }
 }
