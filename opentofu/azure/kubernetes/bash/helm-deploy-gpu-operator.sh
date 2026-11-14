@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -euo pipefail
+
 kubectl config use-context "${KUBE_CONTEXT}"
 
 if [ "$(kubectl config current-context)" != "${KUBE_CONTEXT}" ]; then
