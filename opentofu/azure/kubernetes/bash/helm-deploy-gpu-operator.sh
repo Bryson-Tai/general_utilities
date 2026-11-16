@@ -13,11 +13,10 @@ fi
 helm repo add nvidia https://nvidia.github.io/gpu-operator
 helm repo update
 
-set +euo pipefail
-
 helm upgrade nvidia-gpu-operator nvidia/gpu-operator \
-    --wait --install \
-    --create-namespace  \
+    --install \
+    --create-namespace \
+    --timeout 5m0s \
     --namespace gpu-operator  \
     --values "${CURRENT_DIR}/bash/gpu-operator-values.yaml" || true
 
@@ -26,9 +25,9 @@ helm upgrade nvidia-gpu-operator nvidia/gpu-operator \
 kubectl patch deploy nvidia-gpu-operator-node-feature-discovery-master \
     -n gpu-operator \
     --type=json \
-    -p '[{"op":"add","path":"/spec/template/spec/tolerations/-","value":{"key":"sku","operator":"Equal","value":"gpu","effect":"NoSchedule"}}]'
+    -p '[{"op":"add","path":"/spec/template/spec/tolerations/-","value":{"key":"sku","operator":"Equal","value":"gpu","effect":"NoSchedule"}}]' || echo "Nvidia GPU Operator Node Feature Discovery not found, skipped."
 
 kubectl patch job gpu-operator-cleanup-gpucluster  \
     -n gpu-operator \
     --type=json \
-    -p '[{"op":"add","path":"/spec/template/spec/tolerations/-","value":{"key":"sku","operator":"Equal","value":"gpu","effect":"NoSchedule"}}]'
+    -p '[{"op":"add","path":"/spec/template/spec/tolerations/-","value":{"key":"sku","operator":"Equal","value":"gpu","effect":"NoSchedule"}}]' || echo "Nvidia GPU Operator Cleanup Job not found, skipped."
