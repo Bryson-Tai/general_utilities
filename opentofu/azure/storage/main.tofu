@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "rg" {
-  name     = "${var.env}-${var.storage_configs.name}${length(var.resource_postfix) > 0 ? "-${var.resource_postfix}" : ""}-rg"
+  name     = "${var.env}-${var.storage_configs.name}${length(var.resource_postfix) > 0 ? "-${var.resource_postfix}" : ""}-storage-acc-rg"
   location = var.location
 
   tags = var.tags
