@@ -11,14 +11,8 @@ resource "azurerm_resource_group" "rg" {
   }
 }
 
-resource "random_string" "suffix" {
-  length  = 4
-  upper   = false
-  special = false
-}
-
 resource "azurerm_storage_account" "storage" {
-  name                = "${replace(var.storage_configs.name, "-", "")}${random_string.suffix.result}"
+  name                = "${replace(var.storage_configs.name, "-", "")}storageacc"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
 
@@ -27,6 +21,7 @@ resource "azurerm_storage_account" "storage" {
   account_kind                    = var.storage_configs.account_kind
   min_tls_version                 = var.storage_configs.min_tls_version
   allow_nested_items_to_be_public = false
+  smb_oauth_enabled               = var.storage_configs.enable_smb_oauth
 
   tags = var.tags
 

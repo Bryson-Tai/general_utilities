@@ -28,6 +28,7 @@ variable "storage_configs" {
     account_replication_type : LRS, GRS, ZRS, etc, default is "LRS".
     account_kind             : Storage account kind, default is "StorageV2".
     min_tls_version          : Minimum TLS version, default is "TLS1_2".
+    enable_smb_oauth         : Enable for Managed Identities can access SMB Azure file shares using OAuth, default is true.
   EOT
 
   type = object({
@@ -36,6 +37,7 @@ variable "storage_configs" {
     account_replication_type = optional(string, "LRS")
     account_kind             = optional(string, "StorageV2")
     min_tls_version          = optional(string, "TLS1_2")
+    enable_smb_oauth         = optional(bool, true)
   })
 
   default = {
