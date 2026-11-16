@@ -46,21 +46,21 @@ resource "azurerm_storage_share" "file_share" {
 }
 
 # Allow SMB (port 445) on an existing NSG, e.g. the one created by the virtual-machine module
-resource "azurerm_network_security_rule" "allow_smb_inbound" {
-  count = var.smb_nsg != null ? 1 : 0
+# resource "azurerm_network_security_rule" "allow_smb_inbound" {
+#   count = var.smb_nsg != null ? 1 : 0
 
-  name                        = "allow-smb-inbound"
-  resource_group_name         = var.smb_nsg.resource_group_name
-  network_security_group_name = var.smb_nsg.name
-  priority                    = var.smb_nsg.priority
-  direction                   = "Inbound"
-  access                      = "Allow"
-  protocol                    = "*"
-  source_port_range           = "*"
-  destination_port_range      = "445"
-  source_address_prefixes     = var.smb_nsg.source_address_prefixes
-  destination_address_prefix  = "*"
-}
+#   name                        = "allow-smb-inbound"
+#   resource_group_name         = azurerm_resource_group.rg.name
+#   network_security_group_name = var.smb_nsg.name
+#   priority                    = var.smb_nsg.priority
+#   direction                   = "Inbound"
+#   access                      = "Allow"
+#   protocol                    = "*"
+#   source_port_range           = "*"
+#   destination_port_range      = "445"
+#   source_address_prefixes     = var.smb_nsg.source_address_prefixes
+#   destination_address_prefix  = "*"
+# }
 
 resource "azurerm_role_assignment" "storage_roles" {
   for_each = {

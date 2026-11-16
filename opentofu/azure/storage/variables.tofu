@@ -59,25 +59,23 @@ variable "file_shares" {
   }
 }
 
-variable "smb_nsg" {
-  description = <<EOT
-    Existing Network Security Group to open SMB (port 445) on, set to null to skip.
+# variable "smb_nsg" {
+#   description = <<EOT
+#     Existing Network Security Group to open SMB (port 445) on, set to null to skip.
 
-    name                    : NSG name.
-    resource_group_name     : Resource group of the NSG.
-    priority                : Rule priority, default is 1030.
-    source_address_prefixes : Allowed source addresses, default is ["*"].
-  EOT
+#     name                    : NSG name.
+#     priority                : Rule priority, default is 1030.
+#     source_address_prefixes : Allowed source addresses, default is ["*"].
+#   EOT
 
-  type = object({
-    name                    = string
-    resource_group_name     = string
-    priority                = optional(number, 1030)
-    source_address_prefixes = optional(list(string), ["*"])
-  })
+#   type = object({
+#     name                    = string
+#     priority                = optional(number, 1030)
+#     source_address_prefixes = optional(list(string), ["*"])
+#   })
 
-  default = null
-}
+#   default = null
+# }
 
 variable "role_assignment_principal_ids" {
   description = "Object IDs of the principals (users, groups, service principals) granted access to the storage account"

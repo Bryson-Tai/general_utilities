@@ -119,13 +119,17 @@ resource "terraform_data" "get_aks_credentials" {
   }
 }
 
-resource "terraform_data" "install_gpu" {
+resource "terraform_data" "install_gpu_operator" {
   for_each = { for k, v in var.worker_node_pools : k => v if v.gpu_driver == "Install" }
 
   provisioner "local-exec" {
     command = templatefile("${path.module}/bash/helm-deploy-gpu-operator.sh", {
-      KUBE_CONTEXT = azurerm_kubernetes_cluster.aks.name
+      KUBE_CONTEXT = "${azurerm_kubernetes_cluster.aks.name}-admin"
       CURRENT_DIR  = "${path.module}"
     })
   }
+
+  depends_on = [
+    azurerm_kubernetes_cluster_node_pool.aks_node_pool
+  ]
 }
