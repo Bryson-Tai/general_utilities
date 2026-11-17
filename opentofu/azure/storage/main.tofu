@@ -82,9 +82,15 @@ resource "terraform_data" "assign_roles" {
   provisioner "local-exec" {
     command = <<EOF
       az role assignment create \
-        --assignee "${each.value.principal_id}" \
-        --role "${each.value.role}" \
-        --scope "${azurerm_resource_group.rg.id}"
+        --assignee "$ASSIGNEE" \
+        --role "$ROLE" \
+        --scope "$SCOPE"
     EOF
+
+    environment = {
+      ASSIGNEE = each.value.principal_id
+      ROLE     = each.value.role
+      SCOPE    = azurerm_resource_group.rg.id
+    }
   }
 }
