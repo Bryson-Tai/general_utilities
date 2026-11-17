@@ -58,14 +58,25 @@ resource "azurerm_storage_share" "file_share" {
 # }
 
 locals {
-  role_assignments = flatten([
+  # role_assignments_array = flatten([
+  #   for user, roles in var.role_assignment_map : {
+  #     for role in roles : "${user}-${role}" => {
+  #       principal_id = user
+  #       role         = role
+  #     }
+  #   }
+  # ])
+
+  # role_assignments = { for ra in local.role_assignments_array : "${ra.principal_id}-${ra.role}" => ra }
+
+  role_assignments = merge([
     for user, roles in var.role_assignment_map : {
       for role in roles : "${user}-${role}" => {
         principal_id = user
         role         = role
       }
     }
-  ])
+  ]...)
 }
 
 #TODO: Add role assignment to AKS Identity
