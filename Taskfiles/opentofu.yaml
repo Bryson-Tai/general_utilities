@@ -39,3 +39,23 @@ tasks:
       - .env
     cmds:
       - tofu destroy -auto-approve
+
+  tf:refresh:
+    desc: OpenTofu refresh statefile
+    dir: opentofu/modules
+    deps:
+      - tf:init
+    dotenv:
+      - .env
+    cmds:
+      - tofu refresh
+
+  tf:output:
+    desc: OpenTofu view Output
+    dir: opentofu/modules
+    deps:
+      - tf:init
+    dotenv:
+      - .env
+    cmds:
+      - tofu output
