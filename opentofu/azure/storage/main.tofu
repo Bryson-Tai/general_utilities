@@ -57,11 +57,20 @@ resource "azurerm_storage_share" "file_share" {
 #   destination_address_prefix  = "*"
 # }
 
+locals {
+  role_assignments = flatten([
+    for user, roles in var.role_assignment_map : {
+      for role in roles : "${user}-${role}" => {
+        principal_id = user
+        role         = role
+      }
+    }
+  ])
+}
+
+#TODO: Add role assignment to AKS Identity
 resource "azurerm_role_assignment" "storage_roles" {
-  for_each = {
-    for pair in setproduct(var.role_assignment_principal_ids, var.role_assignment_roles) :
-    "${pair[0]}-${pair[1]}" => { principal_id = pair[0], role = pair[1] }
-  }
+  for_each = local.role_assignments
 
   scope                = azurerm_storage_account.storage.id
   role_definition_name = each.value.role

@@ -79,18 +79,17 @@ variable "file_shares" {
 #   default = null
 # }
 
-variable "role_assignment_principal_ids" {
+variable "role_assignment_map" {
   description = "Object IDs of the principals (users, groups, service principals) granted access to the storage account"
-  type        = list(string)
-  default     = []
-}
-
-variable "role_assignment_roles" {
-  description = "Roles assigned to every principal in `role_assignment_principal_ids`"
-  type        = list(string)
-  default = [
-    "Storage Blob Data Owner",
-    "Storage File Data SMB Share Elevated Contributor",
-    "Storage File Data Privileged Contributor",
-  ]
+  type        = map(list(string))
+  default = {
+    "user1" = [
+      "Storage Blob Data Owner",
+      "Storage File Data SMB Share Elevated Contributor",
+      "Storage File Data Privileged Contributor",
+      "Contributor",
+      "MIC-Subscription-Contributor",
+      "Storage File Data SMB MI Admin",
+    ]
+  }
 }
