@@ -1,0 +1,11 @@
+version: "3"
+
+tasks:
+  tf:test:
+    desc: Run tofu plan
+    dir: opentofu/azure/{{.MODULE}}/example
+    dotenv:
+      - .env
+    cmds:
+      - tofu init
+      - tofu plan
