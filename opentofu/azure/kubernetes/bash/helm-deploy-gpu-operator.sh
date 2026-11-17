@@ -25,9 +25,9 @@ helm upgrade nvidia-gpu-operator nvidia/gpu-operator \
 kubectl patch deploy nvidia-gpu-operator-node-feature-discovery-master \
     -n gpu-operator \
     --type=json \
-    -p '[{"op":"add","path":"/spec/template/spec/tolerations/-","value":{"key":"sku","operator":"Equal","value":"gpu","effect":"NoSchedule"}}]' || echo "Nvidia GPU Operator Node Feature Discovery not found, skipped."
+    -p '[{"op":"add","path":"/spec/template/spec/tolerations/-","value":{"key":"sku","operator":"Equal","value":"gpu","effect":"NoSchedule"}}]' &> /dev/null || echo "Nvidia GPU Operator Node Feature Discovery not found, skipped."
 
 kubectl patch job gpu-operator-cleanup-gpucluster  \
     -n gpu-operator \
     --type=json \
-    -p '[{"op":"add","path":"/spec/template/spec/tolerations/-","value":{"key":"sku","operator":"Equal","value":"gpu","effect":"NoSchedule"}}]' || echo "Nvidia GPU Operator Cleanup Job not found, skipped."
+    -p '[{"op":"add","path":"/spec/template/spec/tolerations/-","value":{"key":"sku","operator":"Equal","value":"gpu","effect":"NoSchedule"}}]' &> /dev/null || echo "Nvidia GPU Operator Cleanup Job not found, skipped."
