@@ -58,17 +58,6 @@ resource "azurerm_storage_share" "file_share" {
 # }
 
 locals {
-  # role_assignments_array = flatten([
-  #   for user, roles in var.role_assignment_map : {
-  #     for role in roles : "${user}-${role}" => {
-  #       principal_id = user
-  #       role         = role
-  #     }
-  #   }
-  # ])
-
-  # role_assignments = { for ra in local.role_assignments_array : "${ra.principal_id}-${ra.role}" => ra }
-
   role_assignments = merge([
     for user, roles in var.role_assignment_map : {
       for role in roles : "${user}-${replace(role, " ", "-")}" => {
@@ -79,10 +68,23 @@ locals {
   ]...)
 }
 
-resource "azurerm_role_assignment" "storage_roles" {
+# resource "azurerm_role_assignment" "storage_roles" {
+#   for_each = local.role_assignments
+
+#   scope                = azurerm_storage_account.storage.id
+#   role_definition_name = each.value.role
+#   principal_id         = each.value.principal_id
+# }
+
+resource "terraform_data" "assign_roles" {
   for_each = local.role_assignments
 
-  scope                = azurerm_storage_account.storage.id
-  role_definition_name = each.value.role
-  principal_id         = each.value.principal_id
+  provisioner "local-exec" {
+    command = <<EOF
+      az role assignment create \
+        --assignee "${each.value.principal_id}" \
+        --role "${each.value.role}" \
+        --scope "${azurerm_resource_group.rg.id}"
+    EOF
+  }
 }
