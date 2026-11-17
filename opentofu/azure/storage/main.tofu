@@ -71,7 +71,7 @@ locals {
 
   role_assignments = merge([
     for user, roles in var.role_assignment_map : {
-      for role in roles : "${user}-${role}" => {
+      for role in roles : "${user}-${replace(role, " ", "-")}" => {
         principal_id = user
         role         = role
       }
@@ -83,6 +83,6 @@ resource "azurerm_role_assignment" "storage_roles" {
   for_each = local.role_assignments
 
   scope                = azurerm_storage_account.storage.id
-  role_definition_name = replace(each.value.role, " ", "-")
+  role_definition_name = each.value.role
   principal_id         = each.value.principal_id
 }
