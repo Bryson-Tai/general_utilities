@@ -79,11 +79,10 @@ locals {
   ]...)
 }
 
-#TODO: Add role assignment to AKS Identity
 resource "azurerm_role_assignment" "storage_roles" {
   for_each = local.role_assignments
 
   scope                = azurerm_storage_account.storage.id
-  role_definition_name = each.value.role
+  role_definition_name = replace(each.value.role, " ", "-")
   principal_id         = each.value.principal_id
 }
